@@ -53,10 +53,42 @@ template<typename... T> void in(T&... args) {((cin >> args), ...);}
 template<typename... T> void out(T&&... args) {((cout << args << endl), ...);}
 template<typename... T> void out2(T&&... args) {((cout << args << " "), ...);}
 
+ll power(ll a, ll b) {
+        ll res = 1;
+        while (b) {
+                if (b & 1) res = res * a % 1000;
+                a = a * a % 1000;
+                b >>= 1;
+        }
+        return res;
+}
+
 void solve() {
-        ll n, i;
-        cin >> n;
-        
+        ll n, k;
+        cin >> n >> k;
+
+        // formula : 
+        // n ^ k = x.yz... * 10 ^ p, here p is some integer
+        // log10(n ^ k) = log10(x.yz * 10 ^ p)
+        // log10(n ^ k) = log10(x.yz) + log10(10 ^ p)
+        // log10(n ^ k) = log10(x.yz) + p, here log10(10) = 1;
+        // log(x.yz) = log10(n ^ k) - p
+        // log(x.yz) = log10(n ^ k) - int value of log10(n ^ k), here p = total_digit - 1 ans total_digit = log(n ^ k) + 1
+        // log(x.yz) = tmp, let's assume tmp = log10(n ^ k) - (int)log10(n ^ k)
+        // x.yz = 10 ^ tmp
+        // ans (int)x.yz * 100 is our desired result
+        double log_double = k * (double)log10(n);
+        ll log_int = k * log10(n);
+        double tmp = log_double - log_int;
+        ll first_3_digit = pow(10.00, tmp) * 100;
+
+        // just we take (product % 1000)
+        ll last_3_digit = power(n, k);
+        string tmp2 = to_string(last_3_digit);
+        if(tmp2.size() == 1) tmp2 = "00" + tmp2;
+        else if(tmp2.size() == 2) tmp2 = "0" + tmp2;
+
+        cout << first_3_digit << " " << tmp2 << endl;
 }
 
 int main () {
@@ -65,7 +97,9 @@ int main () {
                 // freopen("output.txt", "w", stdout);
         #endif
         FIO; //don't use when getting input from file
-        TC(t)
-        solve();
+        TC(t) {
+                cout << "Case " << i << ": ";
+                solve();
+        }
         return 0;
 }
