@@ -1,3 +1,4 @@
+//problem link : https://www.spoj.com/problems/MC/fbclid=IwAR38-JBynET0H-za4Sgr8Fj5cfC-bqQ2itDk14EInq8WTCceQ16rFmXvCOQ
 #include <bits/stdc++.h>
 #include <ext/pb_ds/detail/standard_policies.hpp>
 #include <ext/pb_ds/assoc_container.hpp>
